@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}accueil
+{% endblock %}
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+
+{% block body %}
+	{# <div id="vanta-container"></div> #}
+	<a class="backToPlaylist" href="{{ path('app_home') }}">La playlist</a>
+	<div class="containerPlay">
+		<svg viewbox="0 0 960 300">
+			<symbol id="s-text">
+				<text text-anchor="middle" x="50%" y="80%">Play music</text>
+			</symbol>
+
+			<g class="g-ants">
+				<use xlink:href="#s-text" class="text-copy"></use>
+				<use xlink:href="#s-text" class="text-copy"></use>
+				<use xlink:href="#s-text" class="text-copy"></use>
+				<use xlink:href="#s-text" class="text-copy"></use>
+				<use xlink:href="#s-text" class="text-copy"></use>
+			</g>
+		</svg>
+	</div>
+	<div class="content ">
+
+		<div class="tilt-container  image-wrapper">
+			<img class="tilt imageMusic" src="/uploads/{{ song.cover }} " alt=" {{ song.title }} " data-title="{{ song.title }}" data-artist="{{ song.artist }}" data-song="/uploads/music/{{ song.song }}" data-image="/uploads/{{ song.cover }}" data-category="{{ song.category}}" onclick="playAudio('/uploads/music/{{ song.song }}')">
+		</div>
+		<div class="music-titles">
+			<p class="artist">{{ song.artist}}</p>
+			<p class="title">{{ song.title}}</p>
+		</div>
+
+		<div class="time">
+			<div class="bottom-container">
+				<progress class="amplitude-song-played-progress" id="song-played-progress"></progress>
+
+			<div class="time-container">
+				<span class="current-time">
+					<span class="amplitude-current-minutes"></span>:<span class="amplitude-current-seconds"></span>
+				</span>
+				<span class="duration">
+					<span class="amplitude-duration-minutes"></span>:<span class="amplitude-duration-seconds"></span>
+				</span>
+			</div>
+		</div>
+
+
+		<div class="control-btn">
+			<div
+				class="containerFavorite" data-id="{{song.id}}">
+				{# <p>{{song.favoris}}</p> #}
+				{% if is_granted('ROLE_USER') %}
+					{% set isFavorite = false %}
+					{% for favoris in song.favoris %}
+						{% if favoris.id == app.user.id %}{% endif %}
+						{% set isFavorite = true %}
+					{% endfor %}
+					{% if isFavorite %}
+						<a class="addFav" href="{{ path('remove_favoris', {id: song.id}) }}">
+							<span class="material-symbols-rounded" id="favorite2" data-id="{{song.id}}">
+								favorite
+							</span>
+						</a>
+					{% else %}
+						<a class="addFav" href="{{ path('add_favoris', {id: song.id}) }}">
+							<span class="material-symbols-rounded" id="favorite1" data-id="{{song.id}}">
+								favorite
+							</span>
+						</a>
+					{% endif %}
+				{% else %}
+					<span class="material-symbols-rounded" id="favorite1" data-id="{{song.id}}">
+						favorite
+					</span>
+				{% endif %}
+
+			</div>
+
+			<div class="play-pause amplitude-play-pause" id="play-pause">
+				<span class=" material-symbols-rounded">
+					play_arrow
+				</span>
+			</div>
+			<div>
+				<span class="amplitude-mute material-symbols-rounded" id="volume">
+					volume_up
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+
+		let imageMusic = document.querySelector(".imageMusic");
+let muzik = imageMusic.dataset.song;
+console.log(muzik);
+
+Amplitude.init({
+
+songs: [
+{
+url: muzik
+}
+],
+volume: 50,
+volumeSlider: "volume-slider"
+
+});
+window.onkeydown = function (e) {
+return !(e.keyCode == 32);
+}; /*
+        Handles a click on the song played progress bar.
+    */
+document.getElementById("song-played-progress").addEventListener("click", function (e) {
+var offset = this.getBoundingClientRect();
+var x = e.pageX - offset.left;
+Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
+});
+	</script>
+	{# {% endblock %} #}
+	{{ encore_entry_script_tags('play')}}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+	<form method="post">
+		{% if error %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
+
+		{% if app.user %}
+			<div class="mb-3">
+				Bienvenue
+				{{ app.user.pseudo }}, sur le jukebox numérique 5.4.0
+				{# <a href="{{ path('app_logout') }}">Déconnexion</a> #}
+			</div>
+		{% endif %}
+
+		<div class="container mt-5">
+			<h1 class="title">Connexion</h1>
+			<div class="form_control">
+				<label for="inputEmail">Email</label>
+				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="input" autocomplete="email" required autofocus>
+			</div>
+			<div class="form_control">
+				<label for="inputPassword">Password</label>
+				<input type="password" name="password" id="inputPassword" class="input" autocomplete="current-password" required>
+			</div>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			<button class="btnConnect">
+				Se connecter
+			</button>
+		</div>
+	</form>
+	{{ encore_entry_script_tags('form')}}
+	{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
+{% endblock %}

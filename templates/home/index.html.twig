@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}accueil
+{% endblock %}
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.css"/>
+{% endblock %}
+
+{% block body %}
+	{# <div {{ react_component('MyComponent') }}></div> #}
+	{# <div {{ react_component('Swiper') }}></div> #}<div {{ react_component('Animation') }}> </div>
+
+	{# <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true" slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100" coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+													{% for category in categories %}
+														<swiper-slide class="slideCategories">
+															<img src="/uploads/{{ category.picture }}" alt="{{ category.category}}" data-picture="{{ category.picture}}" data-category="{{ category.category}}" data-category-id="{{category.id}}" class="category-image">
+														</swiper-slide>
+													{% endfor %}
+												</swiper-container> #}
+
+
+	<swiper-container
+		class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true" slides-per-view="6" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100" coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+		{# <swiper-container class="mySwiper2" pagination="true" pagination-clickable="true" slides-per-view="3" space-between="30" free-mode="true"> #}
+		{% for music in musics %}
+			<swiper-slide class="genreImg">
+				<a href="{{ path('app_play', {'songId': music.id})}}">
+					<img class="songImg" src="/uploads/{{ music.cover }}" alt="{{ music.title}}" data-title="{{ music.title }}" data-artist="{{ music.artist }}" data-song="/uploads/{{ music.song }}" data-image="/uploads/{{ music.cover }}" data-category="{{ music.category}}" class="category-img"/>
+				</a>
+			</swiper-slide>
+
+		{% endfor %}
+	</swiper-container>
+
+
+	{% block javascripts %}
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	{% endblock %}
+
+	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
+
+
+	{{ encore_entry_script_tags('home')}}
+{% endblock %}

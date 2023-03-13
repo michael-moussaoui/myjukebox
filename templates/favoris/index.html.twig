@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}accueil
+{% endblock %}
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+
+{% endblock %}
+{% block body %}
+	<h1 class="myFavorite">Mes favoris</h1>
+	<swiper-container
+		class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true" slides-per-view="6" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100" coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+		{# <swiper-container class="mySwiper2" pagination="true" pagination-clickable="true" slides-per-view="3" space-between="30" free-mode="true"> #}
+		{% for favori in favoris %}
+			<swiper-slide class="genreImg">
+				<a href="{{ path('app_play', {'songId': favori.id})}}">
+					<img class="songImg" src="/uploads/{{ favori.cover }}" alt="{{ favori.title}}" data-title="{{ favori.title }}" data-artist="{{ favori.artist }}" data-song="/uploads/{{ favori.song }}" data-image="/uploads/{{ favori.cover }}" data-category="{{ favori.category}}" class="category-img"/>
+				</a>
+			</swiper-slide>
+
+		{% endfor %}
+	</swiper-container>
+	{% block javascripts %}
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	{% endblock %}
+
+	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
+
+
+	{{ encore_entry_script_tags('home')}}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegisterController!
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+
+
+	{# {{ form(form)}} #}
+	<div class="container">
+		<h1 class="title">Inscription</h1>
+		{{ form_start(form)}}
+
+		<div
+			class="form_control">
+			{# {{ form_row(form.pseudo)}} #}
+			{{ form_label(form.pseudo, 'Pseudo', ) }}
+			{{ form_widget(form.pseudo, {'attr': {'class': 'input'}}
+			) }}
+		</div>
+		<div
+			class="form_control">
+			{# {{ form_row(form.email)}} #}
+			{{ form_label(form.email, 'Email', ) }}
+			{{ form_widget(form.email, {'attr': {'class': 'input'}}
+			) }}
+		</div>
+		<div class="form_control">
+			{{ form_label(form.password, 'Password', ) }}
+			{{ form_widget(form.password, {'attr': {'class': 'input'}}
+			) }}
+		</div>
+		<button>
+			S'inscrire
+			{# {{ form_widget(form.inscription,{'label' :'Inscription'})}} #}
+		</button>
+
+		{{ form_end(form)}}
+	</div>
+
+
+	{{ encore_entry_script_tags('form')}}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+{% endblock %}

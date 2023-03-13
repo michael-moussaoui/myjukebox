@@ -1,3 +1,28 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+dashboard:
+  path: /admin
+  controller: App\Controller\Admin\DashboardController::index
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+music_detail:
+  path: /play/{id}
+  controller: App\Controller\HomeController::play
+  requirements:
+    id: '\d+'
+
+musics_by_category:
+  path: /category/{categoryId}/musics
+  controller: App\Controller\MusicController::getMusicsByCategory
+# app_add_favorite_music:
+#   path: /music/{id}
+#   controller: App\Controller\MusicController::addFavoriteMusic
+
+app_music_by_category:
+  path: "/music/category/{categoryId}"
+  controller: App\Controller\MusicController::index
+  methods: [GET]
